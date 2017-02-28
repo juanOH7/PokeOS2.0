@@ -14,7 +14,7 @@ public class PrioQueue {
 
         @Override
         public String toString() {
-            return "prioridad: " + priority;
+            return node + "-" + priority;
         }
     }
 
@@ -83,6 +83,10 @@ public class PrioQueue {
         }
         heap[parent] = last;
         return first;
+    }
+
+    public node get(int pos) {
+        return heap[pos];
     }
 
     public int peek() {

@@ -5,9 +5,14 @@
  */
 package pokeos2.pkg0;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,20 +21,22 @@ import java.util.Scanner;
  * @author Juan O'Hara
  */
 public class Archivo {
+
     private final char delimR = '#';
     private final char delimC = '|';
-    private File archivo;
-    private ArrayList<Integer> availList;
+    private File archivo, elim;
+    private PrioQueue availist;
 
     public Archivo() {
         archivo = new File("pokem.txt");
-        availList = new ArrayList<>();
+        elim = new File("elim.txt");
+        availist = new PrioQueue();
     }
 
     public void agregar(Pokemon registro) {
         try {
             FileWriter wf;
-            if (availList.isEmpty()) {
+            if (availist.isEmpty()) {
                 wf = new FileWriter(archivo, true);
                 BufferedWriter bf = new BufferedWriter(wf);
                 bf.write(registro.nombre + delimC);
@@ -76,7 +83,7 @@ public class Archivo {
                 //lid.add(reader.next());
 
                 String temp = reader.next();
-                if (temp.charAt(0) != '*') {
+                if (!temp.contains("*")) {
                     System.out.println(temp);
                 }
             }
@@ -93,6 +100,46 @@ public class Archivo {
             }*/
             reader.close();
         } catch (Exception e) {
+        }
+    }
+
+    public void erase(int pos) {
+        try {
+            FileWriter fw = new FileWriter(elim);
+            BufferedWriter bf = new BufferedWriter(fw);
+            RandomAccessFile wf = new RandomAccessFile(archivo, "rw");
+            Scanner reader = new Scanner(archivo);
+            reader.useDelimiter(String.valueOf(delimR));
+            int cont = 0, longd = 0;
+            String tmp;
+            while (reader.hasNext() && cont < pos) {
+                longd += reader.next().length();
+                cont++;
+            }
+            availist.insert(pos, reader.next().length());
+            for (int i = 1; i <= availist.size(); i++) {
+                bf.write(availist.get(i).toString() + "\n");
+            }
+            longd += cont;
+            wf.seek(longd);
+            wf.writeChars("*");
+            reader.close();
+            bf.flush();
+            bf.close();
+            wf.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean delete() {
+        return archivo.delete();
+    }
+
+    public void leerAvail() {
+        int size = availist.size();
+        for (int i = 0; i < size; i++) {
+            System.out.println(availist.dequeue());
         }
     }
 }
