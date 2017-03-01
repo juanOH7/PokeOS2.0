@@ -5,6 +5,9 @@
  */
 package pokeos2.pkg0;
 
+import java.io.File;
+import java.util.Scanner;
+
 /**
  *
  * @author Juan O'Hara
@@ -25,19 +28,26 @@ public class test {
         pik3.setTipos("roca", null);
         Pokemon pik4 = new Pokemon("bulbasaur", "bolt", "fewf", 0, "raton", 0, "muy op", "apache", st, null, null);
         pik4.setTipos("hierva", null);
-        Archivo ds = new Archivo();
-        ds.agregar(pik);
-        ds.agregar(pik2);
-        ds.agregar(pik3);
-        ds.agregar(pik4);
-        ds.leer();
-        ds.erase(3);
-        ds.erase(0);
-        ds.erase(2);
-        System.out.println("-------");
-        ds.leer();
-        ds.leerAvail();
-        System.out.println(ds.delete());
+        Scanner sc = new Scanner(System.in);
+        String sdf;
+        int opc = 0;
+        System.out.println("nombre:");
+        sdf = sc.next();
+        Archivo ds = new Archivo(sdf);
+        do {
+            System.out.println("1-agregar\n2-listar\n3-elim\n4-salida\n");
+            opc = sc.nextInt();
+            if (opc == 1) {
+                ds.agregar(pik4);
+                ds.agregar(pik2);
+            } else if (opc == 2) {
+                ds.leer();
+            } else if (opc == 3) {
+                ds.delete();
+            }
+        } while (opc != 4);
+        // ds.leerAvail();
+        // System.out.println(ds.delete());
     }
 
 }
