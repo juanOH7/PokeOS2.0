@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Scanner;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -36,7 +37,25 @@ public class PokeDx extends javax.swing.JFrame {
      */
     public PokeDx() {
         initComponents();
-        usuarios2 = new File("usuarios.txt");
+        /*usuarios2 = new File("usuarios.txt");
+         if (usuarios2.exists()) {
+         try {
+         Scanner reader2 = new Scanner(usuarios2);
+         reader2.useDelimiter("#");
+         String f[] = new String[2];
+         if (reader2.hasNext()) {
+         String temp = reader2.next();
+         StringBuilder temp2 = new StringBuilder(temp);
+         temp2.deleteCharAt(temp.length() - 1);
+         temp = String.valueOf(temp2);
+         f = temp.split("-");
+         String pos = Integer.valueOf(f[0]), tam = Integer.valueOf(f[1]);
+         availist.insert(pos, tam);
+         } else {
+                    
+         } catch (Exception e) {
+         }
+         }*/
         fondo_frame.setIcon(new ImageIcon(new ImageIcon("./src/Images/main.jpg").getImage().getScaledInstance(fondo_frame.getWidth(), fondo_frame.getHeight(), Image.SCALE_SMOOTH)));
         this.setLocationRelativeTo(null);
     }
@@ -210,7 +229,6 @@ public class PokeDx extends javax.swing.JFrame {
         jd_eliminarusuario.getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, -1, -1));
         jd_eliminarusuario.getContentPane().add(fondo_eliminarusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 350));
 
-        jd_pokedex.setPreferredSize(new java.awt.Dimension(400, 600));
         jd_pokedex.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jd_pokedex.getContentPane().add(jl_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 150, 180));
 
@@ -913,6 +931,7 @@ public class PokeDx extends javax.swing.JFrame {
             evoluciones2.add(new Pokemon(evoluciones3[i]));
         }
         Pokemon pokimon = new Pokemon(nombre, apodo, descripcion, altura, forma, peso, habilidad, genero, tipo, stat, evoluciones2, direccion);
+        act.agregar(pokimon);
         currentdex.add(pokimon);
         jd_addpokemon.setVisible(false);
         jd_addpokemon.setModal(false);
@@ -944,6 +963,7 @@ public class PokeDx extends javax.swing.JFrame {
             if (currentdex.get(i).getNombre().equals(nombre)) {
                 JOptionPane.showMessageDialog(this, currentdex.get(i).getNombre() + " Had his head chopped off");
                 currentdex.remove(i);
+                act.erase(nombre);
                 DefaultComboBoxModel cb = new DefaultComboBoxModel();
                 for (int j = 0; j < currentdex.size(); j++) {
                     cb.addElement(currentdex.get(j).getNombre());
@@ -980,9 +1000,11 @@ public class PokeDx extends javax.swing.JFrame {
             if (cb_transferir.getSelectedItem().toString().equals(currentdex.get(i).getNombre())) {
                 Pokemon pokimon = currentdex.get(i);
                 currentdex.remove(i);
+                act.erase(pokimon.getNombre());
                 for (int j = 0; j < usuarios.size(); j++) {
                     if (usuarios.get(j).getNombre().equals(cb_recibir.getSelectedItem().toString())) {
                         usuarios.get(j).add(pokimon);
+                        act.agregar(pokimon);
                         JOptionPane.showMessageDialog(this, pokimon.getNombre() + " se ha enviado exitosamente");
                     }
                 }
