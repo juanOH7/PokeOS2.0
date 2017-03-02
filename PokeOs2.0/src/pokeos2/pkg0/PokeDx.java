@@ -139,11 +139,21 @@ public class PokeDx extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jl_direccion = new javax.swing.JLabel();
         jl_fondoaddpokemon = new javax.swing.JLabel();
+        jd_eliminarpokemon = new javax.swing.JDialog();
+        cb_muerto = new javax.swing.JComboBox();
+        jButton7 = new javax.swing.JButton();
+        jl_fondoeliminarpokemon = new javax.swing.JLabel();
+        jd_transferir = new javax.swing.JDialog();
+        cb_recibir = new javax.swing.JComboBox();
+        cb_transferir = new javax.swing.JComboBox();
+        jButton8 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jl_fondotransferir = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         tf_usuario = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        pf_contrasena = new javax.swing.JPasswordField();
+        tf_contrasena = new javax.swing.JTextField();
         fondo_frame = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -159,7 +169,11 @@ public class PokeDx extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Pocket Monk", 0, 24)); // NOI18N
         jLabel4.setText("Contrasena");
         jd_agregarusuario.getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
+
+        tf_contrasena_agregarusuario.setFont(new java.awt.Font("Pocket Monk", 0, 14)); // NOI18N
         jd_agregarusuario.getContentPane().add(tf_contrasena_agregarusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 110, -1));
+
+        tf_usuario_agregarpersona.setFont(new java.awt.Font("Pocket Monk", 0, 14)); // NOI18N
         jd_agregarusuario.getContentPane().add(tf_usuario_agregarpersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 110, -1));
 
         jButton2.setFont(new java.awt.Font("Pocket Monk", 0, 24)); // NOI18N
@@ -338,9 +352,19 @@ public class PokeDx extends javax.swing.JFrame {
         jMenu2.add(jMenuItem4);
 
         jMenuItem5.setText("Eliminar Pokemon");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem5);
 
         jMenuItem6.setText("Transferir Pokemon");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem6);
 
         jMenuItem3.setText("Salir");
@@ -508,6 +532,43 @@ public class PokeDx extends javax.swing.JFrame {
         jd_addpokemon.getContentPane().add(jl_direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 260, 20));
         jd_addpokemon.getContentPane().add(jl_fondoaddpokemon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 520));
 
+        jd_eliminarpokemon.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cb_muerto.setFont(new java.awt.Font("Pocket Monk", 0, 14)); // NOI18N
+        jd_eliminarpokemon.getContentPane().add(cb_muerto, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 120, 30));
+
+        jButton7.setFont(new java.awt.Font("Pocket Monk", 0, 14)); // NOI18N
+        jButton7.setText("Borrar");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jd_eliminarpokemon.getContentPane().add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 100, 30));
+        jd_eliminarpokemon.getContentPane().add(jl_fondoeliminarpokemon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 350));
+
+        jd_transferir.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cb_recibir.setFont(new java.awt.Font("Pocket Monk", 0, 14)); // NOI18N
+        jd_transferir.getContentPane().add(cb_recibir, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 80, 30));
+
+        cb_transferir.setFont(new java.awt.Font("Pocket Monk", 0, 14)); // NOI18N
+        jd_transferir.getContentPane().add(cb_transferir, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 70, 30));
+
+        jButton8.setFont(new java.awt.Font("Pocket Monk", 0, 14)); // NOI18N
+        jButton8.setText("Transferir");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        jd_transferir.getContentPane().add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Pocket Monk", 0, 14)); // NOI18N
+        jLabel5.setText("----------->");
+        jd_transferir.getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 70, -1));
+        jd_transferir.getContentPane().add(jl_fondotransferir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 300));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -532,8 +593,8 @@ public class PokeDx extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, -1));
 
-        pf_contrasena.setFont(new java.awt.Font("Pocket Monk", 0, 24)); // NOI18N
-        getContentPane().add(pf_contrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 110, 30));
+        tf_contrasena.setFont(new java.awt.Font("Pocket Monk", 0, 14)); // NOI18N
+        getContentPane().add(tf_contrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 110, 30));
         getContentPane().add(fondo_frame, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 490, 340));
 
         jMenu1.setText("Opciones");
@@ -585,25 +646,27 @@ public class PokeDx extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String usuario = this.tf_usuario.getText();
-        String contrasena = this.pf_contrasena.getPassword().toString();
-        //for (int i = 0; i < usuarios.size(); i++) {
-        //if (usuario.equals(usuarios.get(i).getNombre()) && contrasena.equals(usuarios.get(i).getPassword())) {
-        //currentdex = usuarios.get(i).getPokemons();
-        /*
-         DefaultComboBoxModel cb = new DefaultComboBoxModel();
-         cb.addElement("none");
-         for (int j = 0; j < currentdex.size(); j++) {
-         cb.addElement(currentdex.get(j).toString());
-         }
-         cb_evoluciones.setModel(cb);
-         */
-        jd_pokedex.pack();
-        //fondo_pokedex.setIcon(new ImageIcon(new ImageIcon("./src/Images/pokedex.jpg").getImage().getScaledInstance(fondo_pokedex.getWidth(), fondo_pokedex.getHeight(), Image.SCALE_SMOOTH)));
-        jd_pokedex.setModal(true);
-        jd_pokedex.setLocationRelativeTo(this);
-        jd_pokedex.setVisible(true);
-        //}
-        //}
+        String contrasena = this.tf_contrasena.getText();
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuario.equals(usuarios.get(i).getNombre()) && contrasena.equals(usuarios.get(i).getPassword())) {
+                System.out.println("entro");
+                currentdex = usuarios.get(i).getPokemons();
+                jm_nombre.setText(usuario);
+                DefaultComboBoxModel cb = new DefaultComboBoxModel();
+                cb.addElement("none");
+                for (int j = 0; j < currentdex.size(); j++) {
+                    cb.addElement(currentdex.get(j).toString());
+                }
+                cb_nombre.setModel(cb);
+
+                jd_pokedex.pack();
+                //fondo_pokedex.setIcon(new ImageIcon(new ImageIcon("./src/Images/pokedex.jpg").getImage().getScaledInstance(fondo_pokedex.getWidth(), fondo_pokedex.getHeight(), Image.SCALE_SMOOTH)));
+                jd_pokedex.setModal(true);
+                jd_pokedex.setLocationRelativeTo(this);
+                jd_pokedex.setVisible(true);
+                break;
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -661,12 +724,14 @@ public class PokeDx extends javax.swing.JFrame {
                 DefaultComboBoxModel cb = new DefaultComboBoxModel();
                 cb.addElement("none");
                 for (int j = 0; j < pokimon.getEvoluciones().size(); j++) {
-                    cb.addElement(pokimon.getEvoluciones().get(j).toString());
+                    cb.addElement(pokimon.getEvoluciones().get(j).getNombre());
                 }
                 cb_evoluciones.setModel(cb);
+                jl_imagen.setIcon(new ImageIcon(new ImageIcon(pokimon.getImagen()).getImage().getScaledInstance(jl_imagen.getWidth(), jl_imagen.getHeight(), Image.SCALE_SMOOTH)));
                 break;
             }
             if (nombre.equals("none")) {
+                jl_imagen.setIcon(null);
                 jl_apodo.setText(". . .");
                 jl_genero.setText(" . . .");
                 jl_tipo.setText(". . .");
@@ -693,10 +758,29 @@ public class PokeDx extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.currentdex = new ArrayList();
         tf_usuario.setText("");
-        pf_contrasena.setText("");
+        tf_contrasena.setText("");
+        jm_nombre.setText(". . .");
         jd_pokedex.setVisible(false);
         jd_pokedex.setModal(false);
         cb_nombre.setModel(new DefaultComboBoxModel());
+        jl_imagen.setIcon(null);
+        jl_apodo.setText(". . .");
+        jl_genero.setText(" . . .");
+        jl_tipo.setText(". . .");
+        this.jl_altura.setText(" . . .");
+        jl_peso.setText(" . . .");
+        this.jl_atk.setText(". . .");
+        jl_def.setText(". . . ");
+        jl_hp.setText(". . . ");
+        jl_spcdef.setText(". . . ");
+        jl_spcatk.setText(". . . ");
+        jl_speed.setText(". . . ");
+        jl_debilidadx2.setText(". . . ");
+        jl_debilidadx4.setText(". . . ");
+        this.jl_descripcion.setText(". . . ");
+        this.jl_forma.setText(". . . ");
+        jl_habilidad.setText(". . . ");
+        cb_evoluciones.setModel(new DefaultComboBoxModel());
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -736,10 +820,15 @@ public class PokeDx extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        String temp = jl_evoluciones.getText();
-        temp += "," + tf_evoluciones.getText();
-        jl_evoluciones.setText(temp);
-        tf_evoluciones.setText("");
+        if (jl_evoluciones.getText().equals("")) {
+            jl_evoluciones.setText(tf_evoluciones.getText());
+            tf_evoluciones.setText("");
+        } else {
+            String temp = jl_evoluciones.getText();
+            temp += "," + tf_evoluciones.getText();
+            jl_evoluciones.setText(temp);
+            tf_evoluciones.setText("");
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -807,16 +896,90 @@ public class PokeDx extends javax.swing.JFrame {
         for (int i = 0; i < evoluciones3.length; i++) {
             evoluciones2.add(new Pokemon(evoluciones3[i]));
         }
-        Pokemon pokimon = new Pokemon(nombre, apodo, descripcion, altura, forma, peso, habilidad, genero,tipo, stat, evoluciones2, direccion);
+        Pokemon pokimon = new Pokemon(nombre, apodo, descripcion, altura, forma, peso, habilidad, genero, tipo, stat, evoluciones2, direccion);
         currentdex.add(pokimon);
         jd_addpokemon.setVisible(false);
         jd_addpokemon.setModal(false);
         DefaultComboBoxModel cb = new DefaultComboBoxModel();
+        cb.addElement("none");
         for (int i = 0; i < currentdex.size(); i++) {
             cb.addElement(currentdex.get(i).getNombre());
         }
         cb_nombre.setModel(cb);
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        DefaultComboBoxModel cb = new DefaultComboBoxModel();
+        for (int i = 0; i < currentdex.size(); i++) {
+            cb.addElement(currentdex.get(i).getNombre());
+        }
+        cb_muerto.setModel(cb);
+        this.jd_eliminarpokemon.pack();
+        jd_eliminarpokemon.setLocationRelativeTo(this);
+        jd_eliminarpokemon.setModal(true);
+        jd_eliminarpokemon.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        String nombre = cb_muerto.getSelectedItem().toString();
+        for (int i = 0; i < currentdex.size(); i++) {
+            if (currentdex.get(i).getNombre().equals(nombre)) {
+                JOptionPane.showMessageDialog(this, currentdex.get(i).getNombre() + " Had his head chopped off");
+                currentdex.remove(i);
+                DefaultComboBoxModel cb = new DefaultComboBoxModel();
+                for (int j = 0; j < currentdex.size(); j++) {
+                    cb.addElement(currentdex.get(j).getNombre());
+                }
+                cb_muerto.setModel(cb);
+                cb_nombre.setModel(cb);
+            }
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        DefaultComboBoxModel cb = new DefaultComboBoxModel();
+        for (int i = 0; i < currentdex.size(); i++) {
+            cb.addElement(currentdex.get(i).getNombre());
+        }
+        cb_transferir.setModel(cb);
+        cb = new DefaultComboBoxModel();
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (!usuarios.get(i).getNombre().equals(jm_nombre.getText())) {
+                cb.addElement(usuarios.get(i).getNombre());
+            }
+        }
+        cb_recibir.setModel(cb);
+        jd_transferir.pack();
+        jd_transferir.setLocationRelativeTo(this);
+        jd_transferir.setModal(true);
+        jd_transferir.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        for (int i = 0; i < currentdex.size(); i++) {
+            if (cb_transferir.getSelectedItem().toString().equals(currentdex.get(i).getNombre())) {
+                Pokemon pokimon = currentdex.get(i);
+                currentdex.remove(i);
+                for (int j = 0; j < usuarios.size(); j++) {
+                    if (usuarios.get(j).getNombre().equals(cb_recibir.getSelectedItem().toString())) {
+                        usuarios.get(j).add(pokimon);
+                        JOptionPane.showMessageDialog(this, pokimon.getNombre() + " se ha enviado exitosamente");
+                    }
+                }
+            }
+        }
+        DefaultComboBoxModel cb = new DefaultComboBoxModel();
+        cb.addElement("none");
+        for (int i = 0; i < currentdex.size(); i++) {
+            cb.addElement(currentdex.get(i).getNombre());
+        }
+        cb_nombre.setModel(cb);
+        cb_transferir.setModel(cb);
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -859,9 +1022,12 @@ public class PokeDx extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox cb_eliminarusuario;
     private javax.swing.JComboBox cb_evoluciones;
+    private javax.swing.JComboBox cb_muerto;
     private javax.swing.JComboBox cb_nombre;
+    private javax.swing.JComboBox cb_recibir;
     private javax.swing.JComboBox cb_tipo1;
     private javax.swing.JComboBox cb_tipo2;
+    private javax.swing.JComboBox cb_transferir;
     private javax.swing.JLabel fondo_agregarusuario;
     private javax.swing.JLabel fondo_eliminarusuario;
     private javax.swing.JLabel fondo_frame;
@@ -872,6 +1038,8 @@ public class PokeDx extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -879,6 +1047,7 @@ public class PokeDx extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -896,8 +1065,10 @@ public class PokeDx extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JDialog jd_addpokemon;
     private javax.swing.JDialog jd_agregarusuario;
+    private javax.swing.JDialog jd_eliminarpokemon;
     private javax.swing.JDialog jd_eliminarusuario;
     private javax.swing.JDialog jd_pokedex;
+    private javax.swing.JDialog jd_transferir;
     private javax.swing.JLabel jl_agregarimagen;
     private javax.swing.JLabel jl_altura;
     private javax.swing.JLabel jl_apodo;
@@ -909,6 +1080,8 @@ public class PokeDx extends javax.swing.JFrame {
     private javax.swing.JLabel jl_direccion;
     private javax.swing.JLabel jl_evoluciones;
     private javax.swing.JLabel jl_fondoaddpokemon;
+    private javax.swing.JLabel jl_fondoeliminarpokemon;
+    private javax.swing.JLabel jl_fondotransferir;
     private javax.swing.JLabel jl_forma;
     private javax.swing.JLabel jl_genero;
     private javax.swing.JLabel jl_genero1;
@@ -942,11 +1115,11 @@ public class PokeDx extends javax.swing.JFrame {
     private javax.swing.JMenu jm_nombre;
     private javax.swing.JLabel nombre1;
     private javax.swing.JLabel nombre2;
-    private javax.swing.JPasswordField pf_contrasena;
     private javax.swing.JTextArea ta_descripcion;
     private javax.swing.JTextField tf_altura;
     private javax.swing.JTextField tf_apodo;
     private javax.swing.JTextField tf_atk;
+    private javax.swing.JTextField tf_contrasena;
     private javax.swing.JTextField tf_contrasena_agregarusuario;
     private javax.swing.JTextField tf_def;
     private javax.swing.JTextField tf_evoluciones;

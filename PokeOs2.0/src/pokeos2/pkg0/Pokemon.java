@@ -40,6 +40,7 @@ public class Pokemon {
         this.stat = stat;
         this.evoluciones = evoluciones;
         this.imagen = imagen;
+        setDebilidades();
     }
 
     public ArrayList<Pokemon> getEvoluciones() {
@@ -152,7 +153,7 @@ public class Pokemon {
     }
     
 
-    public void setDebilidades() {
+    public final void setDebilidades() {
         if (tipos.contains("Fairy")) {
             x2 = "Poison,Steel";
         }else if (tipos.contains("Steel")) {
