@@ -82,40 +82,6 @@ public class Archivo {
         }
     }
 
-    public Archivo() {
-        archivo = new File("users.txt");
-        elim = new File("elim.txt");
-        header = new File("head.txt");
-        try {
-            if (header.exists()) {
-                Scanner reader = new Scanner(header);
-                if (reader.hasNext()) {
-                    int val = Integer.valueOf(reader.next());
-                    numReg = val;
-                }
-            } else {
-                numReg = 0;
-            }
-            if (elim.exists()) {
-                Scanner reader2 = new Scanner(elim);
-                String f[] = new String[2];
-                if (reader2.hasNext()) {
-                    String temp = reader2.next();
-                    StringBuilder temp2 = new StringBuilder(temp);
-                    temp2.deleteCharAt(temp.length() - 1);
-                    temp = String.valueOf(temp2);
-                    f = temp.split("-");
-                    availist.insert(Integer.valueOf(f[0]), Integer.valueOf(f[1]));
-                } else {
-                    availist = new PrioQueue();
-                }
-            }
-        } catch (FileNotFoundException | NumberFormatException e) {
-            e.printStackTrace();
-        }
-        availist = new PrioQueue();
-    }
-
     public void agregar(Pokemon registro) {
         try {
             FileWriter wf;
@@ -153,7 +119,7 @@ public class Archivo {
             System.out.println(registro.nombre);
             temp += (String.valueOf(delimR));
             boolean Space;
-            int tam = temp.length()-1;
+            int tam = temp.length() - 1;
             System.out.println(tam);
             System.out.println(availist.peekTam());
             Space = tam > availist.peekTam();
@@ -214,44 +180,32 @@ public class Archivo {
         }
     }
 
-    public void agregar(Perfil persona) {
+    public ArrayList leer() {
+        ArrayList<Pokemon> ret = new ArrayList<>();
         try {
-
-        } catch (Exception e) {
-        }
-    }
-
-    public void leer() {
-        try {
-            ArrayList<String> lid = new ArrayList<>();
             Scanner reader = new Scanner(archivo);
             reader.useDelimiter(String.valueOf(delimR));
             int i = 0;
             if (!reader.hasNext()) {
-                return;
+                return null;
             }
             while (reader.hasNext()) {
                 //lid.add(reader.next());
-
                 String temp = reader.next();
-                if (!temp.contains("*")) {
-                    System.out.println(temp);
+                String ds[] = new String[20];
+                if (!temp.contains("*") && temp.length() > 10) {
+                    ds = temp.split("\\|");
+                    Pokemon tmp = new Pokemon(ds[0], ds[1], ds[2],
+                            ds[3], ds[4], ds[5], ds[6],
+                            ds[7], ds[8],
+                            new Stats(ds[9], ds[10], ds[11], ds[12], ds[13], ds[14]), null, ds[15]);
+                    ret.add(tmp);
                 }
             }
-            /*
-            while (i != lid.size()) {
-                String f[] = lid.get(i).split("\\|");
-                int d = 0;
-                while (d != f.length) {
-                    System.out.print(f[d] +" ");
-                    d++;
-                }
-                System.out.println("");
-                i++;
-            }*/
             reader.close();
         } catch (Exception e) {
         }
+        return ret;
     }
 
     public void erase(String target) {

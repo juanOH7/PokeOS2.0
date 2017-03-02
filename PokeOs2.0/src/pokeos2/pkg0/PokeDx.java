@@ -7,8 +7,10 @@ package pokeos2.pkg0;
 
 import java.awt.Image;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
@@ -26,12 +28,15 @@ public class PokeDx extends javax.swing.JFrame {
 
     ArrayList<Perfil> usuarios = new ArrayList();
     ArrayList<Pokemon> currentdex = new ArrayList();
+    File usuarios2;
+    Archivo act;
 
     /**
      * Creates new form PokeDx
      */
     public PokeDx() {
         initComponents();
+        usuarios2 = new File("usuarios.txt");
         fondo_frame.setIcon(new ImageIcon(new ImageIcon("./src/Images/main.jpg").getImage().getScaledInstance(fondo_frame.getWidth(), fondo_frame.getHeight(), Image.SCALE_SMOOTH)));
         this.setLocationRelativeTo(null);
     }
@@ -634,12 +639,21 @@ public class PokeDx extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         String usuario = this.tf_usuario_agregarpersona.getText();
-        String contrasena = this.tf_usuario_agregarpersona.getText();
+        String contrasena = this.tf_contrasena_agregarusuario.getText();
         usuarios.add(new Perfil(usuario, contrasena));
         tf_usuario_agregarpersona.setText(null);
         this.tf_contrasena_agregarusuario.setText(null);
         jd_agregarusuario.setModal(false);
         jd_agregarusuario.setVisible(false);
+        try {
+            FileWriter fw = new FileWriter(usuarios2);
+            BufferedWriter bf = new BufferedWriter(fw);
+            bf.write(usuario + "-" + contrasena + "#");
+            Archivo current = new Archivo(usuario);
+            bf.flush();
+            bf.close();
+        } catch (Exception e) {
+        }
         JOptionPane.showMessageDialog(this, usuario + " Se ha agregado exitosamente");
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -650,15 +664,15 @@ public class PokeDx extends javax.swing.JFrame {
         for (int i = 0; i < usuarios.size(); i++) {
             if (usuario.equals(usuarios.get(i).getNombre()) && contrasena.equals(usuarios.get(i).getPassword())) {
                 System.out.println("entro");
-                currentdex = usuarios.get(i).getPokemons();
+                act = new Archivo(usuario);
+                currentdex = act.leer();
                 jm_nombre.setText(usuario);
                 DefaultComboBoxModel cb = new DefaultComboBoxModel();
                 cb.addElement("none");
                 for (int j = 0; j < currentdex.size(); j++) {
-                    cb.addElement(currentdex.get(j).toString());
+                    cb.addElement(currentdex.get(j).nombre);
                 }
                 cb_nombre.setModel(cb);
-
                 jd_pokedex.pack();
                 //fondo_pokedex.setIcon(new ImageIcon(new ImageIcon("./src/Images/pokedex.jpg").getImage().getScaledInstance(fondo_pokedex.getWidth(), fondo_pokedex.getHeight(), Image.SCALE_SMOOTH)));
                 jd_pokedex.setModal(true);
@@ -723,8 +737,10 @@ public class PokeDx extends javax.swing.JFrame {
                 jl_habilidad.setText(pokimon.getHabilidades());
                 DefaultComboBoxModel cb = new DefaultComboBoxModel();
                 cb.addElement("none");
-                for (int j = 0; j < pokimon.getEvoluciones().size(); j++) {
-                    cb.addElement(pokimon.getEvoluciones().get(j).getNombre());
+                if (pokimon.getEvoluciones() != null) {
+                    for (int j = 0; j < pokimon.getEvoluciones().size(); j++) {
+                        cb.addElement(pokimon.getEvoluciones().get(j).getNombre());
+                    }
                 }
                 cb_evoluciones.setModel(cb);
                 jl_imagen.setIcon(new ImageIcon(new ImageIcon(pokimon.getImagen()).getImage().getScaledInstance(jl_imagen.getWidth(), jl_imagen.getHeight(), Image.SCALE_SMOOTH)));
