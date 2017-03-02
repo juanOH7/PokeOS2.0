@@ -58,20 +58,28 @@ public class Archivo {
             }
             if (elim.exists()) {
                 Scanner reader2 = new Scanner(elim);
+                reader2.useDelimiter("#");
                 String f[] = new String[2];
                 if (reader2.hasNext()) {
+                    availist = new PrioQueue();
                     String temp = reader2.next();
                     StringBuilder temp2 = new StringBuilder(temp);
                     temp2.deleteCharAt(temp.length() - 1);
                     temp = String.valueOf(temp2);
                     f = temp.split("-");
-                    availist.insert(Integer.valueOf(f[0]), Integer.valueOf(f[1]));
+                    int pos = Integer.valueOf(f[0]), tam = Integer.valueOf(f[1]);
+                    availist.insert(pos, tam);
+                } else {
+                    System.out.println("creado vacio");
+                    availist = new PrioQueue();
                 }
+            } else {
+                System.out.println("creado no existe");
+                availist = new PrioQueue();
             }
-        } catch (FileNotFoundException | NumberFormatException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        availist = new PrioQueue();
     }
 
     public Archivo() {
@@ -98,6 +106,8 @@ public class Archivo {
                     temp = String.valueOf(temp2);
                     f = temp.split("-");
                     availist.insert(Integer.valueOf(f[0]), Integer.valueOf(f[1]));
+                } else {
+                    availist = new PrioQueue();
                 }
             }
         } catch (FileNotFoundException | NumberFormatException e) {
@@ -118,29 +128,50 @@ public class Archivo {
             temp += (String.valueOf(registro.peso) + delimC);
             temp += (registro.habilidades + delimC);
             temp += (registro.genero + delimC);
-            if (registro.tipos[1] != null) {
-                temp += (registro.tipos[0] + delimC);
-                temp += (registro.tipos[1] + delimC);
-            } else {
-                temp += (registro.tipos[0] + delimC);
-            }
+            temp += (registro.tipos + delimC);
             temp += (String.valueOf(registro.stat.hp) + delimC);
             temp += (String.valueOf(registro.stat.atk) + delimC);
             temp += (String.valueOf(registro.stat.Def) + delimC);
             temp += (String.valueOf(registro.stat.spcatk) + delimC);
             temp += (String.valueOf(registro.stat.spcdef) + delimC);
             temp += (String.valueOf(registro.stat.speed) + delimC);
-            if (registro.evoluciones != null) {
-                temp += (registro.evoluciones.nombre + delimC);
+            if (registro.getEvoluciones() != null) {
+                for (int i = 0; i < registro.getEvoluciones().size(); i++) {
+                    if (registro.evoluciones != null) {
+                        temp += (registro.evoluciones.get(i).nombre + delimC);
+                    } else {
+                        temp += ("null" + delimC);
+                    }
+                }
+            }
+            if (registro.imagen != null) {
+                temp += (registro.imagen + delimC);
             } else {
                 temp += ("null" + delimC);
+
             }
-            temp += ("numIMg" + delimC);
+            System.out.println(registro.nombre);
             temp += (String.valueOf(delimR));
-            boolean noSpace = false;
-            int tam = temp.length() - 1;
-            noSpace = tam > availist.peek();
-            if (availist.isEmpty() || noSpace) {
+            boolean Space;
+            int tam = temp.length()-1;
+            System.out.println(tam);
+            System.out.println(availist.peekTam());
+            Space = tam > availist.peekTam();
+            System.out.println(Space + "fff");
+            if (availist.isEmpty()) {
+                wf = new FileWriter(archivo, true);
+                BufferedWriter bf = new BufferedWriter(wf);
+                FileWriter wf2 = new FileWriter(header);
+                BufferedWriter bf2 = new BufferedWriter(wf2);
+                bf.write(temp);
+                numReg++;
+                bf2.write(String.valueOf(numReg));
+                bf2.flush();
+                bf2.close();
+                bf.flush();
+                bf.close();
+            } else if (Space) {
+                System.out.println("entra" + registro.nombre);
                 wf = new FileWriter(archivo, true);
                 BufferedWriter bf = new BufferedWriter(wf);
                 FileWriter wf2 = new FileWriter(header);
@@ -156,10 +187,24 @@ public class Archivo {
                 RandomAccessFile ra = new RandomAccessFile(archivo, "rw");
                 FileWriter wf2 = new FileWriter(header);
                 BufferedWriter bf2 = new BufferedWriter(wf2);
-                ra.seek(availist.dequeue());
+                FileWriter fw3 = new FileWriter(elim);
+                BufferedWriter bw3 = new BufferedWriter(fw3);
+                int PosEscr = availist.peek();
+                PrioQueue.node tempd = availist.dequeue();
+                int sobra = tempd.getPriority() - temp.length();
+                if (sobra > 0) {
+                    int posNue = PosEscr + temp.length();
+                    availist.insert(posNue, sobra);
+                    for (int i = 1; i <= availist.size(); i++) {
+                        bw3.write(availist.get(i).toString() + "#");
+                    }
+                }
+                ra.seek(PosEscr);
                 ra.writeBytes(temp);
                 ra.close();
                 numReg++;
+                bw3.flush();
+                bw3.close();
                 bf2.write(String.valueOf(numReg));
                 bf2.flush();
                 bf2.close();
@@ -209,43 +254,57 @@ public class Archivo {
         }
     }
 
-    public void erase(int pos) {
+    public void erase(String target) {
         try {
-            if (pos > numReg) {
-                return;
-            }
+            System.out.println("Prin");
+            System.out.println(target);
+            boolean found = false;
             FileWriter fw = new FileWriter(elim);
             BufferedWriter bf = new BufferedWriter(fw);
             RandomAccessFile wf = new RandomAccessFile(archivo, "rw");
             Scanner reader = new Scanner(archivo);
             reader.useDelimiter(String.valueOf(delimR));
             int cont = 0, longd = 0;
-            String tmp;
             if (!reader.hasNext()) {
                 return;
             }
-            while (reader.hasNext() && cont < pos) {
-                longd += reader.next().length();
-                cont++;
+            String temp = "";
+            while (reader.hasNext() && !found) {
+                temp = reader.next();
+                if (temp.contains(target)) {
+                    found = true;
+                }
+                if (!found) {
+                    longd += temp.length();
+                    cont++;
+                }
             }
-            longd += cont;
-            availist.insert(longd, reader.next().length());
-            for (int i = 1; i <= availist.size(); i++) {
-                bf.write(availist.get(i).toString() + "#");
+            if (found) {
+                System.out.println(found + "22");
+                longd += cont;
+                System.out.println(availist.isEmpty() + "list");
+                availist.insert(longd, temp.length());
+                System.out.println(availist.isEmpty() + "list");
+                for (int i = 1; i <= availist.size(); i++) {
+                    System.out.println("insert");
+                    bf.write(availist.get(i).toString() + "#");
+                }
+                wf.seek(longd);
+                wf.writeByte(42);
+                numReg--;
+                FileWriter wff = new FileWriter(header);
+                BufferedWriter bf2 = new BufferedWriter(wff);
+                bf2.write(String.valueOf(numReg));
+                bf2.flush();
+                bf2.close();
             }
-            wf.seek(longd);
-            wf.writeByte(42);
-            numReg--;
-            FileWriter wff = new FileWriter(header);
-            BufferedWriter bf2 = new BufferedWriter(wff);
-            bf2.write(String.valueOf(numReg));
-            bf2.flush();
-            bf2.close();
             reader.close();
             bf.flush();
             bf.close();
             wf.close();
+            System.out.println("Fin");
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

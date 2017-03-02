@@ -4,12 +4,20 @@ public class PrioQueue {
 
     public class node {
 
-        private int node;
+        private Object node;
         private int priority;
 
-        public node(int name, int prio) {
+        public node(Object name, int prio) {
             this.node = name;
             this.priority = prio;
+        }
+
+        public Object getNode() {
+            return node;
+        }
+
+        public int getPriority() {
+            return priority;
         }
 
         @Override
@@ -45,6 +53,7 @@ public class PrioQueue {
     }
 
     public void insert(int dir, int priority) {
+        System.out.println("------ insert");
         node newJob = new node(dir, priority);
 
         heap[++heapSize] = newJob;
@@ -56,12 +65,12 @@ public class PrioQueue {
         heap[pos] = newJob;
     }
 
-    public int dequeue() {
+    public node dequeue() {
         int parent, child;
         node first, last;
         if (isEmpty()) {
             System.out.println("Heap is empty");
-            return -1;
+            return null;
         }
 
         first = heap[1];
@@ -82,7 +91,7 @@ public class PrioQueue {
             child *= 2;
         }
         heap[parent] = last;
-        return first.node;
+        return first;
     }
 
     public node get(int pos) {
@@ -90,9 +99,17 @@ public class PrioQueue {
     }
 
     public int peek() {
-        if (heap[1] == null) {
-            return -1; 
+        if (isEmpty()) {
+            return -1;
         }
-        return heap[1].priority;
+        return (int) heap[1].node;
     }
+
+    public int peekTam() {
+        if (isEmpty()) {
+            return -1;
+        }
+        return (int) heap[1].priority;
+    }
+
 }
