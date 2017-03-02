@@ -37,27 +37,28 @@ public class PokeDx extends javax.swing.JFrame {
      */
     public PokeDx() {
         initComponents();
-        /*usuarios2 = new File("usuarios.txt");
-         if (usuarios2.exists()) {
-         try {
-         Scanner reader2 = new Scanner(usuarios2);
-         reader2.useDelimiter("#");
-         String f[] = new String[2];
-         if (reader2.hasNext()) {
-         String temp = reader2.next();
-         StringBuilder temp2 = new StringBuilder(temp);
-         temp2.deleteCharAt(temp.length() - 1);
-         temp = String.valueOf(temp2);
-         f = temp.split("-");
-         String pos = Integer.valueOf(f[0]), tam = Integer.valueOf(f[1]);
-         availist.insert(pos, tam);
-         } else {
-                    
-         } catch (Exception e) {
-         }
-         }*/
-        fondo_frame.setIcon(new ImageIcon(new ImageIcon("./src/Images/main.jpg").getImage().getScaledInstance(fondo_frame.getWidth(), fondo_frame.getHeight(), Image.SCALE_SMOOTH)));
-        this.setLocationRelativeTo(null);
+        usuarios2 = new File("usuarios.txt");
+        if (usuarios2.exists()) {
+            try {
+                Scanner reader2 = new Scanner(usuarios2);
+                reader2.useDelimiter("#");
+                String f[] = new String[2];
+                if (reader2.hasNext()) {
+                    String temp = reader2.next();
+                    StringBuilder temp2 = new StringBuilder(temp);
+                    temp2.deleteCharAt(temp.length() - 1);
+                    temp = String.valueOf(temp2);
+                    f = temp.split("-");
+                    String pos = f[0], tam = f[1];
+                    Perfil user = new Perfil(tam, pos);
+                    usuarios.add(user);
+                }
+            } catch (Exception e) {
+            }
+
+            fondo_frame.setIcon(new ImageIcon(new ImageIcon("./src/Images/main.jpg").getImage().getScaledInstance(fondo_frame.getWidth(), fondo_frame.getHeight(), Image.SCALE_SMOOTH)));
+            this.setLocationRelativeTo(null);
+        }
     }
 
     /**
