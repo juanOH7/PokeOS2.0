@@ -14,16 +14,27 @@ import java.util.ArrayList;
 public class Perfil {
     private String nombre;
     private String password;
- //   private Pokemon[] pokemons;
+    private ArrayList<Pokemon> pokemons;
 
     public Perfil(String nombre, String password) {
         this.nombre = nombre;
         this.password = password;
+         pokemons = new ArrayList();
     }
+    
 
     public String getNombre() {
         return nombre;
     }
+    
+    public void add(Pokemon puchamon){
+        pokemons.add(puchamon);
+    }
+
+    public ArrayList<Pokemon> getPokemons() {
+        return pokemons;
+    }
+    
 
     public void setNombre(String nombre) {
         this.nombre = nombre;

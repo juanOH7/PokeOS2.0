@@ -17,13 +17,13 @@ public class Stats {
     int spcdef;
     int speed;
 
-    public Stats(int hp, int atk, int Def, int spcatk, int spcdef, int speed) {
-        this.hp = hp;
-        this.atk = atk;
-        this.Def = Def;
-        this.spcatk = spcatk;
-        this.spcdef = spcdef;
-        this.speed = speed;
+    public Stats(String hp, String atk, String Def, String spcatk, String spcdef, String speed) {
+        this.hp = Integer.valueOf(hp);
+        this.atk = Integer.valueOf(atk);
+        this.Def = Integer.valueOf(Def);
+        this.spcatk = Integer.valueOf(spcatk);
+        this.spcdef = Integer.valueOf(spcdef);
+        this.speed = Integer.valueOf(speed);
     }
 
     public int getHp() {
